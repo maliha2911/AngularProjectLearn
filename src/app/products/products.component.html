@@ -1,0 +1,53 @@
+<h2> Products </h2>
+
+<!-- Filter Section -->
+<div class="filter-container">
+  <label>Filter:</label>
+  <input type="text" [(ngModel)]="filter" placeholder="Enter name or description" />
+</div>
+
+
+<!-- Form for adding/editing products -->
+<div class="form-container">
+  <form (submit)="saveProduct()">
+    <label>
+      Name:
+      <input type="text" [(ngModel)]="product.name" name="name" required />
+    </label>
+    <label>
+      Price:
+      <input type="number" [(ngModel)]="product.price" name="price" required />
+    </label>
+    <label>
+      Description:
+      <input type="text" [(ngModel)]="product.description" name="description" />
+    </label>
+    <div class="button-group">
+      <button type="submit">{{ isEditing ? 'Update' : 'Add' }} Product</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+</div>
+
+<!-- Product Grid/Table -->
+<table class="grid-table">
+  <thead>
+  <tr>
+    <th (click)="sortBy = 'name'; sortProducts()">Name</th>
+    <th (click)="sortBy = 'price'; sortProducts()">Price</th>
+    <th (click)="sortBy = 'description'; sortProducts()">Description</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of filteredProducts">
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.description }}</td>
+    <td>
+      <button class="edit-button" (click)="editProduct(product)">✏️</button>
+      <button class="delete-button" (click)="deleteProduct(product.id)">🗑️</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
